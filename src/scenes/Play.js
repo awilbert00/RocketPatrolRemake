@@ -33,4 +33,8 @@ class Play extends Phaser.Scene {
         
 
     }
+
+    update() {
+        this.starfield.tilePositionX -= 4;
+    }
 }
