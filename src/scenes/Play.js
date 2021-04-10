@@ -28,21 +28,27 @@ class Play extends Phaser.Scene {
             this,
             100,
             200,
-            'spaceship'
+            'spaceship',
+            0,
+            10
         );
 
         this.ship2 = new Ship(
             this,
             300,
             240,
-            'spaceship'
+            'spaceship',
+            0,
+            10
         );
 
         this.ship3 = new Ship(
             this,
             380,
             300,
-            'spaceship'
+            'spaceship',
+            0,
+            10
         );
 
         //green UI background
@@ -130,5 +136,8 @@ class Play extends Phaser.Scene {
             ship.alpha = 1;
             boom.destroy();
         });
+
+        this.p1Score += ship.points;
+        this.scoreLeft.text = this.p1Score;
     }
 }
