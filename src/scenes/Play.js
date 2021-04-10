@@ -7,6 +7,8 @@ class Play extends Phaser.Scene {
          this.load.image('starfield', 'assets/starfield.png');
          this.load.image('rocket', 'assets/rocket.png');
          this.load.image('spaceship', 'assets/spaceship.png');
+         this.load.spritesheet('explosion', 'assets/explosion.png',
+         {frameWidth: 64, frameHeight: 32, startFrame: 0, endFrame: 9});
 
     }
 
@@ -61,6 +63,15 @@ class Play extends Phaser.Scene {
         keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         
+        this.anims.create( {
+            key: 'explode',
+            frames: this.anims.generateFrameNumbers(
+                'explosion', 
+                {start: 0,
+                 end: 9,
+                 first: 0}),
+            frameRate: 30
+        });
 
 
     }
@@ -84,8 +95,21 @@ class Play extends Phaser.Scene {
             rocket.y + rocket.height > ship.y && 
             rocket.y < (ship.y + ship.height) ) {
                 ship.alpha = 0;
+                this.shipExplode(ship);
                 rocket.reset();
                 ship.reset();
+                
             }
+    }
+
+    shipExplode(ship) {
+        ship.alpha = 0;
+        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0,0);
+        boom.anims.play('explode');
+        boom.on('animationcomplete', () => {
+            ship.reset();
+            ship.alpha = 1;
+            boom.destroy();
+        });
     }
 }
