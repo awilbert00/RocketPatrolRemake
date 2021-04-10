@@ -73,6 +73,24 @@ class Play extends Phaser.Scene {
             frameRate: 30
         });
 
+        this.p1Score = 0;
+        let scoreConfig = {
+            fontFamily: 'Courier',
+            fontSize: '28px',
+            backgroundColor: '#843605',
+            align: 'right',
+            padding: {
+                top: 5,
+                bottom: 5,
+            },
+            fixedWidth: 100
+        }
+        this.scoreLeft = this.add.text(
+            borderUISize + borderPadding, 
+            borderUISize + borderPadding*2,
+            this.p1Score,
+            scoreConfig);
+
 
     }
 
@@ -95,9 +113,10 @@ class Play extends Phaser.Scene {
             rocket.y + rocket.height > ship.y && 
             rocket.y < (ship.y + ship.height) ) {
                 ship.alpha = 0;
-                this.shipExplode(ship);
                 rocket.reset();
+                this.shipExplode(ship);
                 ship.reset();
+                
                 
             }
     }
